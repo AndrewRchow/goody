@@ -215,12 +215,12 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\EditorContentResponse.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Requests\EditorContentInsertRequest.cs" />
     <Compile Include="Models\Requests\EditorContentUpdateRequest.cs" />
     <Compile Include="Models\Responses\BaseResponse.cs" />
+    <Compile Include="Models\Responses\EditorContentResponse.cs" />
     <Compile Include="Models\Responses\ItemResponse.cs" />
     <Compile Include="Models\Responses\ItemsResponse.cs" />
     <Compile Include="Models\Responses\SuccessResponse.cs" />

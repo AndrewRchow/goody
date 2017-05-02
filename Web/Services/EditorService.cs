@@ -1,5 +1,6 @@
 ﻿using Goody.Web.Models;
 using Goody.Web.Models.Requests;
+using Goody.Web.Models.Responses;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -18,6 +19,7 @@ namespace Goody.Web.Services
             {
                 using (SqlCommand cmd = new SqlCommand("EditorContent_DeleteById", conn))
                 {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
                     conn.Open();
                     cmd.ExecuteNonQuery();
@@ -34,6 +36,7 @@ namespace Goody.Web.Services
             {
                 using (SqlCommand cmd = new SqlCommand("EditorContent_GetAll", conn))
                 {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
                     {
@@ -57,6 +60,7 @@ namespace Goody.Web.Services
             {
                 using (SqlCommand cmd = new SqlCommand("EditorContent_Insert",conn))
                 {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Title", req.Title);
                     cmd.Parameters.AddWithValue("@Description", req.Description);
                     SqlParameter parm = new SqlParameter();
@@ -79,6 +83,7 @@ namespace Goody.Web.Services
             {
                 using (SqlCommand cmd = new SqlCommand("EditorContent_SelectById", conn))
                 {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
                     conn.Open();
                     using (SqlDataReader reader = cmd.ExecuteReader(System.Data.CommandBehavior.CloseConnection))
@@ -102,6 +107,7 @@ namespace Goody.Web.Services
             {
                 using (SqlCommand cmd = new SqlCommand("EditorContent_Update", conn))
                 {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", req.Id);
                     cmd.Parameters.AddWithValue("@Title", req.Title);
                     cmd.Parameters.AddWithValue("@Description", req.Description);
