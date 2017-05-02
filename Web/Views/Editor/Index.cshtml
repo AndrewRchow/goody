@@ -6,11 +6,124 @@
 <h2>CKEditor Example</h2>
 <hr />
 <div class="container">
-    <p id="editorContent" style="font-size: 25px"></p>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <td>Id</td>
+                        <td>Title</td>
+                        <td>Description</td>
+                        <td>&nbsp;</td>
+                    </tr>
+                </thead>
+                <tbody class="editorContentList"></tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 @section scripts {
+    <script type="text/html" id="template">
+        <tr>
+            <td class="id"><!--Id--></td>
+            <td class="title"><!--Title--></td>
+            <td class="description"><!--Description--></td>
+            <td class="actions">
+                <button class="edit btn btn-default btn-xs">Edit</button>
+                <button class="delete btn btn-default btn-xs">Delete</button>
+            </td>
+        </tr>
+    </script>
 
-    <script type="text/javascript" src="~/Scripts/ckeditor/ckeditor.js"></script>
+    <script>
+        // Page variables and functions
+        goody.page.items = null;
+        goody.page.currentItem = null;
+        goody.page.targetId = null;
+        goody.page.startUp = function () {
+            console.log('CKEditor Example Index - startUp function');
+            goody.services.getEditorContent(goody.page.handlers.onGetEditorContentSuccess, goody.page.handlers.onGetEditorContentError);
+        };
+
+        goody.page.editContent = function () {
+            var targetId = $(this).closest('tr').find('.id').text();
+            window.location.href = '/editor/' + targetId + '/edit';
+        };
+
+        goody.page.deleteContent = function () {
+            goody.page.currentItem = $(this).closest('tr');
+            goody.page.targetId = parseInt($(this).closest('tr').find('.id').text());
+            goody.services.deleteById(goody.page.targetId, goody.page.handlers.onDeleteByIdSuccess, goody.page.handlers.onDeleteByIdError);
+        };
+
+        goody.page.render = function () {
+            for (var i = 0; i < goody.page.items.length; i++) {
+                var template = $($('#template').html());
+                template.find(".id").text(goody.page.items[i].id);
+                template.find(".title").text(goody.page.items[i].title);
+                template.find(".description").text(goody.page.items[i].description);
+                template.appendTo(".editorContentList");
+            }
+            $("tbody").on("click", ".edit", goody.page.editContent);
+            $("tbody").on("click", ".delete", goody.page.deleteContent);
+        };
+
+        // Page Services
+        goody.services.getEditorContent = function (onSuccess, onError) {
+            var url = '/api/editor';
+            var settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                type: 'GET',
+                success: onSuccess,
+                error: onError,
+                xhrFields: {
+                    withCredentials: true
+                }
+            };
+            $.ajax(url, settings);
+        };
+
+        goody.services.deleteById = function (data, onSuccess, onError) {
+            var url = '/api/editor/' + data;
+            var settings = {
+                cache: false,
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                type: 'DELETE',
+                success: onSuccess,
+                error: onError,
+                xhrFields: {
+                    withCredentials: true
+                }
+            };
+            $.ajax(url, settings);
+        };
+
+        // Page Handlers
+        goody.page.handlers.onGetEditorContentSuccess = function (data, textStatus, jqXHR) {
+            goody.page.items = data.items;
+            goody.page.render();
+        };
+
+        goody.page.handlers.onGetEditorContentError = function (jqXHR, textStatus, thrownerror) {
+            console.log(textStatus);
+        };
+
+        goody.page.handlers.onDeleteByIdSuccess = function (data, textStatus, jqXHR) {
+            console.log("Successfully deleted: " + goody.page.targetId);
+            for (var i = 0; i < goody.page.items; i++) {
+                if (goody.page.items[i].id == goody.page.targetId) {
+                    goody.page.items.splice(i, 1);
+                    break;
+                }
+            }
+            goody.page.currentItem.remove();
+        };
+
+        goody.page.handlers.onDeleteByIdError = function (jqXHR, textStatus, thrownerror) {
+            console.log(textStatus);
+        };
+    </script>
 
 }
