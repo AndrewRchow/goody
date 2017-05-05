@@ -15,7 +15,9 @@ namespace Goody.Web.Controllers
         [Route("{id:int}/edit")]
         [Route("create")]
         public ActionResult Edit(int id = 0) {
-            return View();
+            ItemViewModel<int> model = new ItemViewModel<int>();
+            model.Item = id;
+            return View(model);
         }
     }
 }

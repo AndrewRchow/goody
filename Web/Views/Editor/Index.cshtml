@@ -8,12 +8,12 @@
 <div class="container">
     <div class="row">
         <div class="table-responsive">
+            <a href="/editor/create" class="btn btn-default btn-primary">Create</a>
             <table class="table table-bordered">
                 <thead>
                     <tr>
                         <td>Id</td>
                         <td>Title</td>
-                        <td>Description</td>
                         <td>&nbsp;</td>
                     </tr>
                 </thead>
@@ -28,7 +28,6 @@
         <tr>
             <td class="id"><!--Id--></td>
             <td class="title"><!--Title--></td>
-            <td class="description"><!--Description--></td>
             <td class="actions">
                 <button class="edit btn btn-default btn-xs">Edit</button>
                 <button class="delete btn btn-default btn-xs">Delete</button>
@@ -62,7 +61,6 @@
                 var template = $($('#template').html());
                 template.find(".id").text(goody.page.items[i].id);
                 template.find(".title").text(goody.page.items[i].title);
-                template.find(".description").text(goody.page.items[i].description);
                 template.appendTo(".editorContentList");
             }
             $("tbody").on("click", ".edit", goody.page.editContent);

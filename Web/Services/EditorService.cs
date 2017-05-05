@@ -65,6 +65,7 @@ namespace Goody.Web.Services
                     cmd.Parameters.AddWithValue("@Description", req.Description);
                     SqlParameter parm = new SqlParameter();
                     parm.ParameterName = "@Id";
+                    parm.SqlDbType = System.Data.SqlDbType.Int;
                     parm.Direction = System.Data.ParameterDirection.Output;
                     cmd.Parameters.Add(parm);
                     conn.Open();
@@ -78,7 +79,7 @@ namespace Goody.Web.Services
 
         public EditorContentResponse EditorContent_SelectById(int id)
         {
-            EditorContentResponse editorContent = new EditorContentResponse();
+            EditorContentResponse editorContent = null;
             using (SqlConnection conn = new SqlConnection(connStr))
             {
                 using (SqlCommand cmd = new SqlCommand("EditorContent_SelectById", conn))
@@ -90,6 +91,7 @@ namespace Goody.Web.Services
                     {
                         while (reader.Read())
                         {
+                            editorContent = new EditorContentResponse();
                             editorContent.Id = (int)reader[0];
                             editorContent.Title = (string)reader[1];
                             editorContent.Description = (string)reader[2];
