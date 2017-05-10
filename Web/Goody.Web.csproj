@@ -1760,7 +1760,6 @@
     <Content Include="Scripts\angularjs\docs\content\misc\faq.ngdoc" />
     <Content Include="Scripts\angularjs\docs\content\misc\index.ngdoc" />
     <Content Include="Scripts\angularjs\docs\content\misc\started.ngdoc" />
-    <Content Include="Scripts\angularjs\docs\content\notes\empty.tmp" />
     <Content Include="Scripts\angularjs\docs\content\tutorial\index.ngdoc" />
     <Content Include="Scripts\angularjs\docs\content\tutorial\step_00.ngdoc" />
     <Content Include="Scripts\angularjs\docs\content\tutorial\step_01.ngdoc" />
@@ -2277,7 +2276,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>20831</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
