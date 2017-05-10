@@ -1900,6 +1900,7 @@
     <Content Include="Scripts\angular-ckeditor\CHANGELOG.md" />
     <Content Include="Scripts\angular-ckeditor\README.md" />
     <None Include="Properties\PublishProfiles\goody.pubxml" />
+    <None Include="Properties\PublishProfiles\goody_msdeploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\ckeditor\adapters\jquery.js" />
     <Content Include="Scripts\ckeditor\build-config.js" />
