@@ -209,6 +209,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Api\EditorApiController.cs" />
     <Compile Include="Controllers\EditorController.cs" />
+    <Compile Include="Controllers\EditorNgController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -620,6 +621,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Editor\Index.cshtml" />
     <Content Include="Views\Editor\Edit.cshtml" />
+    <Content Include="Views\EditorNg\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
