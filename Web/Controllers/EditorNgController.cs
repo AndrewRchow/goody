@@ -9,7 +9,7 @@ namespace Goody.Web.Controllers
     public class EditorNgController : Controller
     {
         // GET: EditorNg
-        public ActionResult Index()
+        public ActionResult Index() 
         {
             return View();
         }
