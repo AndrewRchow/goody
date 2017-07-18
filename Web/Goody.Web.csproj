@@ -626,6 +626,7 @@
     <Content Include="Views\Editor\Index.cshtml" />
     <Content Include="Views\Editor\Edit.cshtml" />
     <Content Include="Views\EditorNg\Index.cshtml" />
+    <Content Include="Views\EditorNg\Manage.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
