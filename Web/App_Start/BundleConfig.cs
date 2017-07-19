@@ -35,6 +35,11 @@ namespace Goody.Web
                 "https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
                 .Include("~/Scripts/respond.js"));
 
+            // Angular stuff
+            bundles.Add(new ScriptBundle("~/bundles/angular",
+                "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js")
+                .Include("~/Scripts/angular.min.js"));
+
             bundles.Add(new StyleBundle("~/Content/css",
                 "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css")
                 .Include("~/Content/bootstrap.css"));
