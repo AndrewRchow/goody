@@ -238,6 +238,20 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Scripts\angularjs\angular-animate.js" />
+    <Content Include="Scripts\angularjs\angular-aria.js" />
+    <Content Include="Scripts\angularjs\angular-cookies.js" />
+    <Content Include="Scripts\angularjs\angular-loader.js" />
+    <Content Include="Scripts\angularjs\angular-message-format.js" />
+    <Content Include="Scripts\angularjs\angular-messages.js" />
+    <Content Include="Scripts\angularjs\angular-mocks.js" />
+    <Content Include="Scripts\angularjs\angular-parse-ext.js" />
+    <Content Include="Scripts\angularjs\angular-resource.js" />
+    <Content Include="Scripts\angularjs\angular-route.js" />
+    <Content Include="Scripts\angularjs\angular-sanitize.js" />
+    <Content Include="Scripts\angularjs\angular-scenario.js" />
+    <Content Include="Scripts\angularjs\angular-touch.js" />
+    <Content Include="Scripts\angularjs\angular.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include=".bowerrc" />
