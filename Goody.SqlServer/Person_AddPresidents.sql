@@ -1,0 +1,11 @@
+﻿DECLARE @_id INT;
+EXEC Person_Insert 'George', null, 'Washington', '2-22-1732', 'sa', @_id OUT;
+EXEC Person_Insert 'John', null, 'ADams', '10-30-1735', 'sa', @_id OUT;
+EXEC Person_Insert 'Thomas', null, 'Jefferson', '4-13-1743', 'sa', @_id OUT;
+EXEC Person_Insert 'James', null, 'Madison', '3-16-1751', 'sa', @_id OUT;
+EXEC Person_Insert 'James', null, 'Monroe', '4-28-1758', 'sa', @_id OUT;
+EXEC Person_Insert 'John', 'Quincy', 'Adams', '7-11-1767', 'sa', @_id OUT;
+EXEC Person_Insert 'Andrew', null, 'Jackson', '3-16-1767', 'sa', @_id OUT;
+EXEC Person_Insert 'Martin', null, 'Van Buren', '12-5-1782', 'sa', @_id OUT;
+EXEC Person_Insert 'William', 'Henry', 'Harrison', '2-9-1773', 'sa', @_id OUT;
+EXEC Person_Insert 'John', null, 'Tyler', '3-29-1790', 'sa', @_id OUT;
