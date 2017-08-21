@@ -27,7 +27,7 @@ SELECT * FROM Person;
 */
 BEGIN
 	DECLARE @modifiedDate DATETIME = GETUTCDATE();
-	UPDATE PERSON
+	UPDATE Person
 	SET FirstName = @FirstName,
 		MiddleName = @MiddleName,
 		LastName = @LastName,
