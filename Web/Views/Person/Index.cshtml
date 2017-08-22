@@ -3,39 +3,35 @@
     ViewBag.Title = "Index";
 }
 
+@*This creates space at top - something different in the lastest bootstrap*@
 <div class="page-header"></div>
-<h2>People</h2>
-<div class="container">
+<div class="container" ng-controller="personController as personCtrl">
+    <h2>People</h2>
+    <button class="btn-link" type="button" ng-click="personCtrl.create()">Create</button>
     <table class="table table-bordered table-hover table-responsive table-striped">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>First</th>
                 <th>Middle</th>
                 <th>Last</th>
                 <th>DOB</th>
-                <th>Created</th>
-                <th>Modified</th>
-                <th>By</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Victor</td>
-                <td>Manuel</td>
-                <td>Campos</td>
-                <td>03/26/1969</td>
-                <td>8/21/2017</td>
-                <td>8/21/2017</td>
-                <td>Vic</td>
+            <tr ng-repeat="item in personCtrl.items">
+                <td>{{item.firstName}}</td>
+                <td>{{item.middleName}}</td>
+                <td>{{item.lastName}}</td>
+                <td>{{item.dob | date}}</td>
                 <td>
-                    <button type="button" onclick="javascript:alert('saved')">Save</button>
-                    <button type="button" onclick="javascript:alert('deleted')">Delete</button>
+                    <button class="btn-link" type="button" ng-click="personCtrl.edit(item)">Edit</button>
+                    <button class="btn-link" type="button" ng-click="personCtrl.delete(item)">Delete</button>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
-
+@section scripts{
+    @Scripts.Render("~/bundles/personCtrl")  
+}

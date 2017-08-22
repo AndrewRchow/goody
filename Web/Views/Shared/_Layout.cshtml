@@ -29,7 +29,7 @@
             </div>
         </div>
     </div>
-    <div class="container body-content">
+    <div class="container body-content" ng-app="goodyApp">
         @RenderBody()
         <hr />
         <footer>
@@ -51,6 +51,8 @@
     @Scripts.Render("~/bundles/angular-route")
     @Scripts.Render("~/bundles/angular-sanitize")
     @Scripts.Render("~/bundles/angular-touch")
+
+    @Scripts.Render("~/bundles/goodyapp")
 
     @RenderSection("scripts", required: false)
 </body>

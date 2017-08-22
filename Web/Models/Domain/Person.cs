@@ -9,7 +9,7 @@ namespace Goody.Web.Models.Domain
     {
         public int Id { get; set; }
         public string FirstName { get; set; }
-        public string MiddleInitial { get; set; }
+        public string MiddleName { get; set; }
         public string LastName { get; set; }
         public DateTime DOB { get; set; }
         public DateTime CreatedDate { get; set; }
