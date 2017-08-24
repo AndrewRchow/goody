@@ -95,6 +95,11 @@ namespace Goody.Web
                 "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js")
                 .Include("~/Scripts/angularjs/angular.js"));
 
+            // Angular Material
+            bundles.Add(new ScriptBundle("~/bundles/material",
+                "https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.js")
+                .Include("~/Scripts/material/angular-material.js"));
+
             // Goody App JS
             bundles.Add(new ScriptBundle("~/bundles/goodyapp")
                 .Include("~/Scripts/app/goodyapp.js"));
@@ -113,6 +118,10 @@ namespace Goody.Web
             bundles.Add(new StyleBundle("~/Content/css",
                 "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css")
                 .Include("~/Content/bootstrap.css"));
+
+            bundles.Add(new StyleBundle("~/Content/material",
+                "https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.css")
+                .Include("~/Content/material/angular-material.css"));
 
             bundles.Add(new StyleBundle("~/Content/sitecss")
                 .Include("~/Content/site.css"));

@@ -1,0 +1,52 @@
+﻿@model Goody.Web.Models.ViewModels.ItemViewModel<int>
+@{
+    ViewBag.Title = "Manage";
+}
+
+<div class="page-header"></div>
+<div layout="column" ng-cloak ng-controller="personController as personCtrl">
+    <input id="modelId" type="hidden" value=@Model.Item />
+    <h2>Manage</h2>
+    <md-content layout-padding>
+        <form name="personForm">
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block">
+                    <label>First</label>
+                    <input md-maxlength="50" required md-asterisk name="firstName" ng-model="personCtrl.item.firstName" />
+                    <div ng-messages="personForm.firstName.$error">
+                        <div ng-message="Required">First name is required.</div>
+                        <div ng-message="md-maxlength">First name must be less than 50 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Middle</label>
+                    <input md-maxlength="50" md-no-asterisk namee="middleName" ng-model="personCtrl.item.middleName" />
+                    <div ng-messages="personForm.middleName.$error">
+                        <div ng-message="md-maxlength">Middle name must be less than 50 characters long</div>
+                    </div>
+                </md-input-container>
+            </div>
+            <div layout-gt-xs="row">
+                <md-input-container class="md-block">
+                    <label>Last</label>
+                    <input md-maxlength="50" required md-asterisk name="lastName" ng-model="personCtrl.item.lastName" />
+                    <div ng-messages="personForm.lastName.$error">
+                        <div ng-message="Required">Last name is required.</div>
+                        <div ng-message="md-maxlength">Last name must be less than 50 characters long.</div>
+                    </div>
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Birthdate</label>
+                    <md-datepicker ng-model="personCtrl.item.dob"></md-datepicker>
+                </md-input-container>
+            </div>
+        </form>
+        <section layout="row" layout-sm="column" layout-align="center" layout-wrap>
+            <md-button md-no-ink class="md-primary" ng-click="personCtrl.back()">Back</md-button>
+            <md-button md-no-ink class="md-primary" ng-click="personCtrl.save()">Save</md-button>
+        </section>
+    </md-content>
+</div>
+@section scripts{
+    @Scripts.Render("~/bundles/personCtrl")
+}

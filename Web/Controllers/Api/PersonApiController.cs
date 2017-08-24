@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace Goody.Web.Controllers.Api
@@ -21,6 +22,12 @@ namespace Goody.Web.Controllers.Api
         public HttpResponseMessage Post(PersonAddRequest model)
         {
             ItemResponse<int> response = new ItemResponse<int>();
+
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+                model.ModifiedBy = HttpContext.Current.User.Identity.Name;
+            else
+                model.ModifiedBy = "Anonymous";
+
             response.Item = personService.Insert(model);
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
@@ -48,6 +55,12 @@ namespace Goody.Web.Controllers.Api
         public HttpResponseMessage Put(Person model)
         {
             SuccessResponse response = new SuccessResponse();
+
+            if (HttpContext.Current.User.Identity.IsAuthenticated)
+                model.ModifiedBy = HttpContext.Current.User.Identity.Name;
+            else
+                model.ModifiedBy = "Anonymous";
+
             personService.Update(model);
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }

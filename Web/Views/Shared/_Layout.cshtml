@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/material")
     @Scripts.Render("~/Content/sitecss")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -24,6 +25,7 @@
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("People", "Index", "Person")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -51,6 +53,7 @@
     @Scripts.Render("~/bundles/angular-route")
     @Scripts.Render("~/bundles/angular-sanitize")
     @Scripts.Render("~/bundles/angular-touch")
+    @Scripts.Render("~/bundles/material")
 
     @Scripts.Render("~/bundles/goodyapp")
 

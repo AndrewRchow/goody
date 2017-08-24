@@ -23,7 +23,7 @@ namespace Goody.Web.Services
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@FirstName", model.FirstName);
-                    cmd.Parameters.AddWithValue("@MiddleInitial", model.MiddleInitial);
+                    cmd.Parameters.AddWithValue("@MiddleName", model.MiddleName);
                     cmd.Parameters.AddWithValue("@LastName", model.LastName);
                     cmd.Parameters.AddWithValue("@DOB", model.DOB);
                     cmd.Parameters.AddWithValue("@ModifiedBy", model.ModifiedBy);
@@ -99,7 +99,7 @@ namespace Goody.Web.Services
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", model.Id);
                     cmd.Parameters.AddWithValue("@FirstName", model.FirstName);
-                    cmd.Parameters.AddWithValue("@MiddleInitial", model.MiddleName);
+                    cmd.Parameters.AddWithValue("@MiddleName", model.MiddleName);
                     cmd.Parameters.AddWithValue("@LastName", model.LastName);
                     cmd.Parameters.AddWithValue("@DOB", model.DOB);
                     cmd.Parameters.AddWithValue("@ModifiedBy", model.ModifiedBy);
