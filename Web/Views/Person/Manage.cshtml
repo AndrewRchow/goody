@@ -9,6 +9,12 @@
     <h2>Manage</h2>
     <md-content layout-padding>
         <form name="personForm">
+            <div layout-gt-xs="row" ng-show="personCtrl.item.id > 0">
+                <md-input-container class="md-block">
+                    <label>ID (read only)</label>
+                    <input ng-model="personCtrl.item.id" disabled />
+                </md-input-container>
+            </div>
             <div layout-gt-xs="row">
                 <md-input-container class="md-block">
                     <label>First</label>
@@ -40,8 +46,22 @@
                     <md-datepicker ng-model="personCtrl.item.dob"></md-datepicker>
                 </md-input-container>
             </div>
+            <div layout-gt-xs="row" ng-show="personCtrl.item.id > 0">
+                <md-input-container class="md-block">
+                    <label>Created</label>
+                    <input disabled value="{{personCtrl.item.createdDate | date: 'medium'}}" />
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Modified</label>
+                    <input value="{{personCtrl.item.modifiedDate | date: 'medium'}}" disabled />
+                </md-input-container>
+                <md-input-container class="md-block">
+                    <label>Modified by</label>
+                    <input value="{{personCtrl.item.modifiedBy}}" disabled />
+                </md-input-container>
+            </div>
         </form>
-        <section layout="row" layout-sm="column" layout-align="center" layout-wrap>
+        <section layout="row" layout-md="column" layout-align="center" layout-wrap>
             <md-button md-no-ink class="md-primary" ng-click="personCtrl.back()">Back</md-button>
             <md-button md-no-ink class="md-primary" ng-click="personCtrl.save()">Save</md-button>
         </section>
