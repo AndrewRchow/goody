@@ -21,8 +21,10 @@ namespace Goody.Web.Controllers.Api
         [Route]
         public HttpResponseMessage Post(PersonAddRequest model)
         {
-            ItemResponse<int> response = new ItemResponse<int>();
+            if (!ModelState.IsValid)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
 
+            ItemResponse<int> response = new ItemResponse<int>();
             if (HttpContext.Current.User.Identity.IsAuthenticated)
                 model.ModifiedBy = HttpContext.Current.User.Identity.Name;
             else
@@ -54,8 +56,10 @@ namespace Goody.Web.Controllers.Api
         [Route]
         public HttpResponseMessage Put(Person model)
         {
-            SuccessResponse response = new SuccessResponse();
+            if (!ModelState.IsValid)
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
 
+            SuccessResponse response = new SuccessResponse();
             if (HttpContext.Current.User.Identity.IsAuthenticated)
                 model.ModifiedBy = HttpContext.Current.User.Identity.Name;
             else

@@ -52,15 +52,18 @@ namespace Goody.Web.Services
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
                     SqlDataReader reader = cmd.ExecuteReader();
-                    reader.Read();
-                    model = Mapper(reader);
+
+                    if (reader.Read())
+                        model = Mapper(reader);
+
                 }
                 conn.Close();
             }
             return model;
         }
 
-        public List<Person> SelectAll() {
+        public List<Person> SelectAll()
+        {
             List<Person> personList = new List<Person>();
             using (SqlConnection conn = new SqlConnection(connString))
             {
@@ -115,7 +118,7 @@ namespace Goody.Web.Services
             using (SqlConnection conn = new SqlConnection(connString))
             {
                 conn.Open();
-                using (SqlCommand cmd=new SqlCommand("Person_Delete", conn))
+                using (SqlCommand cmd = new SqlCommand("Person_Delete", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@Id", id);
