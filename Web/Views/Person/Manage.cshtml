@@ -43,7 +43,7 @@
                 </md-input-container>
                 <md-input-container class="md-block">
                     <label>Birthdate</label>
-                    <md-datepicker ng-model="personCtrl.item.dob"></md-datepicker>
+                    <md-datepicker required ng-model="personCtrl.item.dob"></md-datepicker>
                 </md-input-container>
             </div>
             <div layout-gt-xs="row" ng-show="personCtrl.item.id > 0">
@@ -63,7 +63,7 @@
         </form>
         <section layout="row" layout-md="column" layout-align="center" layout-wrap>
             <md-button md-no-ink class="md-primary" ng-click="personCtrl.back()">Back</md-button>
-            <md-button md-no-ink class="md-primary" ng-click="personCtrl.save()">Save</md-button>
+            <md-button md-no-ink class="md-primary" ng-click="personCtrl.save()" ng-disabled="personForm.$invalid">Save</md-button>
         </section>
     </md-content>
 </div>
