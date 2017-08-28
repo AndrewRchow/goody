@@ -35,6 +35,11 @@ namespace Goody.Web
                 "https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js")
                 .Include("~/Scripts/respond.js"));
 
+            // Angular File Upload
+            bundles.Add(new ScriptBundle("~/bundles/angular-fileupload",
+                "https://cdnjs.cloudflare.com/ajax/libs/danialfarid-angular-file-upload/12.2.13/ng-file-upload.min.js")
+                .Include("~/Scripts/ngfileupload/ng-file-upload.js"));
+
             // Angular Animate
             bundles.Add(new ScriptBundle("~/bundles/angular-animate",
                 "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js")

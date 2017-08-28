@@ -26,6 +26,13 @@
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("People", "Index", "Person")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">File<b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Basic Upload", "Index", "File")</li>
+                            <li>@Html.ActionLink("Drag N Drop", "Index", "File")</li>
+                        </ul>
+                    </li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -39,9 +46,12 @@
         </footer>
     </div>
 
+    @*jQuery, Bootstrap and Angular*@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/angular")
+
+    @*Angular AddOns*@
     @Scripts.Render("~/bundles/angular-animate")
     @Scripts.Render("~/bundles/angular-aria")
     @Scripts.Render("~/bundles/angular-cookies")
@@ -53,10 +63,13 @@
     @Scripts.Render("~/bundles/angular-route")
     @Scripts.Render("~/bundles/angular-sanitize")
     @Scripts.Render("~/bundles/angular-touch")
+    @Scripts.Render("~/bundles/angular-fileupload")
+
+    @*Angular Material UI*@
     @Scripts.Render("~/bundles/material")
 
+    @*Application specific*@
     @Scripts.Render("~/bundles/goodyapp")
-
     @RenderSection("scripts", required: false)
 </body>
 </html>

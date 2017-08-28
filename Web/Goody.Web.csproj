@@ -201,7 +201,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Api\FileApiController.cs" />
     <Compile Include="Controllers\Api\PersonApiController.cs" />
+    <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PersonController.cs" />
@@ -249,6 +251,7 @@
     <Content Include="Scripts\angularjs\angular-sanitize.js" />
     <Content Include="Scripts\angularjs\angular-touch.js" />
     <Content Include="Scripts\angularjs\angular.js" />
+    <Content Include="Scripts\app\controllers\filecontroller.js" />
     <Content Include="Scripts\app\goodyapp.js" />
     <Content Include="Scripts\app\services\personservice.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -262,6 +265,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\goody.pubxml" />
     <None Include="Properties\PublishProfiles\goody_msdeploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -280,6 +284,7 @@
     <Content Include="Scripts\app\controllers\personcontroller.js" />
     <Content Include="Content\material\angular-material.css" />
     <Content Include="Scripts\material\angular-material.js" />
+    <Content Include="Scripts\ngfileupload\ng-file-upload.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
@@ -321,9 +326,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Person\Manage.cshtml" />
+    <Content Include="Views\File\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\files\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
