@@ -2,8 +2,6 @@
 using Goody.Web.Models.Requests;
 using Goody.Web.Models.Responses;
 using Goody.Web.Services;
-using System.Configuration;
-using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -46,10 +44,6 @@ namespace Goody.Web.Controllers.Api
         [Route]
         public HttpResponseMessage GetAll()
         {
-            string fqn = Path.Combine(
-                HttpContext.Current.Server.MapPath(ConfigurationManager.AppSettings["fileFolder"]), 
-                "Message.log");
-            File.AppendAllText(fqn, "Inside the GetAll method of the PersonApiController");
             ItemsResponse<Person> response = new ItemsResponse<Person>();
             response.Items = personService.SelectAll();
             return Request.CreateResponse(HttpStatusCode.OK, response);
