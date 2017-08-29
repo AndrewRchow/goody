@@ -1,4 +1,6 @@
-﻿using Goody.Web.Models.Responses;
+﻿using Goody.Web.Models.Requests;
+using Goody.Web.Models.Responses;
+using Goody.Web.Services;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -12,65 +14,54 @@ using System.Web.Http;
 
 namespace Goody.Web.Controllers.Api
 {
-    public class UploadDataModel
-    {
-        public string testString1 { get; set; }
-        public string testString2 { get; set; }
-    }
-
     [RoutePrefix("api/file")]
     public class FileApiController : ApiController
     {
+        FileService fileService = new FileService();
+
         [HttpPost]
         [Route("upload")]
-        public async Task<HttpResponseMessage> Upload()
+        public async Task<HttpResponseMessage> UploadAsync()
         {
             ItemResponse<string> response = new ItemResponse<string>();
-            if (!Request.Content.IsMimeMultipartContent())
-                this.Request.CreateResponse(HttpStatusCode.UnsupportedMediaType);
 
-            var provider = GetMultipartProvider();
-            var result = await Request.Content.ReadAsMultipartAsync(provider);
-            var originalFileName = GetDeserializedFileName(result.FileData.First());
-            var uploadedFileInfo = new FileInfo(result.FileData.First().LocalFileName);
-            var fileUploadObj = GetFormData<UploadDataModel>(result);
+            FileUploadAddRequest model = new FileUploadAddRequest
+            {
+                ModifiedBy = HttpContext.Current.User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name : "anonymous",
+                PostedFile = HttpContext.Current.Request.Files[0]
+            };
+            string contentType = Request.Content.Headers.ContentType.MediaType;
+            model.Username = "";
+
+            model.ServerFileName = string.Format("{0}_{1}{2}", 
+                Path.GetFileNameWithoutExtension(model.PostedFile.FileName), 
+                Guid.NewGuid().ToString(), 
+                Path.GetExtension(model.PostedFile.FileName));
+
+            await SavePostedFile(model);
+            fileService.Insert(model);
 
             response.Item = "File uploaded successfully!!";
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
-        private MultipartFormDataStreamProvider GetMultipartProvider()
+        private async Task SavePostedFile(FileUploadAddRequest file)
         {
-            // IMPORTANT: replace "(tilde)" with the real tilde character
-            // (our editor doesn't allow it, so I just wrote "(tilde)" instead)
-            var uploadFolder = System.Configuration.ConfigurationManager.AppSettings["fileFolder"];
-            var root = HttpContext.Current.Server.MapPath(uploadFolder);
-            Directory.CreateDirectory(root);
-            return new MultipartFormDataStreamProvider(root);
-        }
+            MemoryStream ms = null;
+            string rootPath = string.Empty;
+            string serverPath = string.Empty;
+            string fqn = string.Empty;
 
-        private object GetFormData<T>(MultipartFormDataStreamProvider result)
-        {
-            if (result.FormData.HasKeys())
+            serverPath = System.Configuration.ConfigurationManager.AppSettings["fileFolder"];
+            rootPath = HttpContext.Current.Server.MapPath(serverPath);
+            fqn = System.IO.Path.Combine(rootPath, file.ServerFileName);
+
+            using (FileStream fs = new FileStream(fqn, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: file.PostedFile.ContentLength, useAsync: true))
             {
-                var unescapedFormData = Uri.UnescapeDataString(result.FormData
-                    .GetValues(0).FirstOrDefault() ?? String.Empty);
-                if (!String.IsNullOrEmpty(unescapedFormData))
-                    return JsonConvert.DeserializeObject<T>(unescapedFormData);
+                ms = new MemoryStream();
+                file.PostedFile.InputStream.CopyTo(ms);
+                await fs.WriteAsync(ms.ToArray(), 0, file.PostedFile.ContentLength);
             }
-
-            return null;
-        }
-
-        private string GetDeserializedFileName(MultipartFileData fileData)
-        {
-            var fileName = GetFileName(fileData);
-            return JsonConvert.DeserializeObject(fileName).ToString();
-        }
-
-        public string GetFileName(MultipartFileData fileData)
-        {
-            return fileData.Headers.ContentDisposition.FileName;
         }
     }
 }

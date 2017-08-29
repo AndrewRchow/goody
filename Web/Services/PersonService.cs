@@ -9,10 +9,8 @@ using System.Web;
 
 namespace Goody.Web.Services
 {
-    public class PersonService
+    public class PersonService : BaseService
     {
-        private string connString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
         public int Insert(PersonAddRequest model)
         {
             int id = 0;
