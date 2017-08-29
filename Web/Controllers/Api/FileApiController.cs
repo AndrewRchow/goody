@@ -23,24 +23,31 @@ namespace Goody.Web.Controllers.Api
         [Route("upload")]
         public async Task<HttpResponseMessage> UploadAsync()
         {
-            ItemResponse<int> response = new ItemResponse<int>();
-
-            FileUploadAddRequest model = new FileUploadAddRequest
+            try
             {
-                ModifiedBy = HttpContext.Current.User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name : "anonymous",
-                PostedFile = HttpContext.Current.Request.Files[0]
-            };
-            string contentType = Request.Content.Headers.ContentType.MediaType;
+                ItemResponse<int> response = new ItemResponse<int>();
 
-            model.ServerFileName = string.Format("{0}_{1}{2}",
-                Path.GetFileNameWithoutExtension(model.PostedFile.FileName),
-                Guid.NewGuid().ToString(),
-                Path.GetExtension(model.PostedFile.FileName));
+                FileUploadAddRequest model = new FileUploadAddRequest
+                {
+                    ModifiedBy = HttpContext.Current.User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name : "anonymous",
+                    PostedFile = HttpContext.Current.Request.Files[0]
+                };
+                string contentType = Request.Content.Headers.ContentType.MediaType;
 
-            await SavePostedFile(model);
-            response.Item = await fileService.Insert(model);
+                model.ServerFileName = string.Format("{0}_{1}{2}",
+                    Path.GetFileNameWithoutExtension(model.PostedFile.FileName),
+                    Guid.NewGuid().ToString(),
+                    Path.GetExtension(model.PostedFile.FileName));
 
-            return Request.CreateResponse(HttpStatusCode.OK, response);
+                await SavePostedFile(model);
+                response.Item = await fileService.Insert(model);
+
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ex);
+            }
         }
 
         private async Task SavePostedFile(FileUploadAddRequest file)
