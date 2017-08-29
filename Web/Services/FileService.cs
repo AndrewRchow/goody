@@ -11,16 +11,18 @@ namespace Goody.Web.Services
 {
     public class FileService : BaseService
     {
-        public int Insert(FileUploadAddRequest model)
+        public async Task<int> Insert(FileUploadAddRequest model)
         {
+            // string fileUrl = System.IO.Path.Combine(
+            //                      System.Configruation.ConfigurationManager.AppSettings["fileFolder"].Value,
+            //                      model.SystemFileName);
             int id = 0;
             using (SqlConnection conn=new SqlConnection(connString))
             {
-                conn.Open();
+                await conn.OpenAsync();
                 using (SqlCommand cmd = new SqlCommand("UploadedFile_Insert", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@UserName", model.Username);
                     cmd.Parameters.AddWithValue("@FileName", model.PostedFile.FileName);
                     cmd.Parameters.AddWithValue("@Size", model.PostedFile.ContentLength);
                     cmd.Parameters.AddWithValue("@Type", model.PostedFile.ContentType);
@@ -31,10 +33,9 @@ namespace Goody.Web.Services
                     parm.Direction = ParameterDirection.Output;
                     cmd.Parameters.Add(parm);
 
-                    cmd.ExecuteNonQuery();
+                    await cmd.ExecuteNonQueryAsync().ContinueWith(_ => conn.Close());
                     id = (int)cmd.Parameters["@Id"].Value;
                 }
-                conn.Close();
             }
             return id;
         }

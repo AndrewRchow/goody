@@ -1,5 +1,4 @@
 ﻿CREATE PROC [dbo].[UploadedFile_Insert]
-	@UserName NVARCHAR(128),
 	@FileName NVARCHAR(128),
 	@Size INT,
 	@Type NVARCHAR(50),
@@ -9,7 +8,6 @@
 AS
 /*
 DECLARE @_id INT,
-		@_userName NVARCHAR(128)		= 'SomeBooks',
 		@_fileName NVARCHAR(128)		= 'old_books.jpg',
 		@_size INT						= 128000,
 		@_type NVARCHAR(50)				= 'jpg',
@@ -17,7 +15,6 @@ DECLARE @_id INT,
 		@_modifiedBy NVARCHAR(128)		= 'insertedbyvic';
 
 EXECUTE UploadedFile_Insert 
-	@_userName,
 	@_fileName,
 	@_size,
 	@_type,
@@ -29,14 +26,12 @@ EXECUTE UploadedFile_Insert
 */
 BEGIN
 	INSERT INTO	UploadedFile(
-		UserName,
 		FileName,
 		Size,
 		Type,
 		SystemFileName,
 		ModifiedBy)
 	Values(
-		@UserName,
 		@FileName,
 		@Size,
 		@Type,

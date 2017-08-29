@@ -23,7 +23,7 @@ namespace Goody.Web.Controllers.Api
         [Route("upload")]
         public async Task<HttpResponseMessage> UploadAsync()
         {
-            ItemResponse<string> response = new ItemResponse<string>();
+            ItemResponse<int> response = new ItemResponse<int>();
 
             FileUploadAddRequest model = new FileUploadAddRequest
             {
@@ -31,17 +31,15 @@ namespace Goody.Web.Controllers.Api
                 PostedFile = HttpContext.Current.Request.Files[0]
             };
             string contentType = Request.Content.Headers.ContentType.MediaType;
-            model.Username = "";
 
-            model.ServerFileName = string.Format("{0}_{1}{2}", 
-                Path.GetFileNameWithoutExtension(model.PostedFile.FileName), 
-                Guid.NewGuid().ToString(), 
+            model.ServerFileName = string.Format("{0}_{1}{2}",
+                Path.GetFileNameWithoutExtension(model.PostedFile.FileName),
+                Guid.NewGuid().ToString(),
                 Path.GetExtension(model.PostedFile.FileName));
 
             await SavePostedFile(model);
-            fileService.Insert(model);
+            response.Item = await fileService.Insert(model);
 
-            response.Item = "File uploaded successfully!!";
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 

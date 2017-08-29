@@ -1,11 +1,10 @@
 ﻿CREATE TABLE [dbo].[UploadedFile](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserName] [nvarchar](128) NOT NULL,
 	[FileName] [nvarchar](128) NOT NULL,
 	[Size] [int] NOT NULL,
 	[Type] [nvarchar](50) NOT NULL,
 	[SystemFileName] [nvarchar](128) NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[CreatedDate] [datetime] NOT NULL,
 	[ModifiedDate] [datetime] NOT NULL,
 	[ModifiedBy] [nvarchar](128) NOT NULL,
  CONSTRAINT [PK_UploadedFile] PRIMARY KEY CLUSTERED 
@@ -15,4 +14,9 @@
 ) ON [PRIMARY]
 GO
 
+ALTER TABLE [dbo].[UploadedFile] ADD  CONSTRAINT [DF_UploadedFile_CreateDate]  DEFAULT (getutcdate()) FOR [CreatedDate]
+GO
+
+ALTER TABLE [dbo].[UploadedFile] ADD  CONSTRAINT [DF_UploadedFile_ModifiedDate]  DEFAULT (getutcdate()) FOR [ModifiedDate]
+GO
 
