@@ -1,11 +1,7 @@
 ﻿using Goody.Web.Models.Requests;
-using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace Goody.Web.Services
 {
@@ -23,9 +19,9 @@ namespace Goody.Web.Services
                 using (SqlCommand cmd = new SqlCommand("UploadedFile_Insert", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@FileName", model.PostedFile.FileName);
-                    cmd.Parameters.AddWithValue("@Size", model.PostedFile.ContentLength);
-                    cmd.Parameters.AddWithValue("@Type", model.PostedFile.ContentType);
+                    cmd.Parameters.AddWithValue("@FileName", model.FileName);
+                    cmd.Parameters.AddWithValue("@Size", model.Size);
+                    cmd.Parameters.AddWithValue("@Type", model.Type);
                     cmd.Parameters.AddWithValue("@SystemFileName", model.ServerFileName);
                     cmd.Parameters.AddWithValue("@ModifiedBy", model.ModifiedBy);
 

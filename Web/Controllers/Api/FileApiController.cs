@@ -1,11 +1,8 @@
 ﻿using Goody.Web.Models.Requests;
 using Goody.Web.Models.Responses;
 using Goody.Web.Services;
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -26,20 +23,22 @@ namespace Goody.Web.Controllers.Api
             try
             {
                 ItemResponse<int> response = new ItemResponse<int>();
-
+                HttpPostedFile postedFile = HttpContext.Current.Request.Files[0];
                 FileUploadAddRequest model = new FileUploadAddRequest
                 {
-                    ModifiedBy = HttpContext.Current.User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name : "anonymous",
-                    PostedFile = HttpContext.Current.Request.Files[0]
+                    FileName = postedFile.FileName,
+                    Size = postedFile.ContentLength,
+                    Type = postedFile.ContentType,
+                    ModifiedBy = HttpContext.Current.User.Identity.IsAuthenticated ? HttpContext.Current.User.Identity.Name : "anonymous"
                 };
                 string contentType = Request.Content.Headers.ContentType.MediaType;
 
                 model.ServerFileName = string.Format("{0}_{1}{2}",
-                    Path.GetFileNameWithoutExtension(model.PostedFile.FileName),
+                    Path.GetFileNameWithoutExtension(postedFile.FileName),
                     Guid.NewGuid().ToString(),
-                    Path.GetExtension(model.PostedFile.FileName));
+                    Path.GetExtension(postedFile.FileName));
 
-                await SavePostedFile(model);
+                await SavePostedFile(postedFile);
                 response.Item = await fileService.Insert(model);
 
                 return Request.CreateResponse(HttpStatusCode.OK, response);
@@ -50,22 +49,26 @@ namespace Goody.Web.Controllers.Api
             }
         }
 
-        private async Task SavePostedFile(FileUploadAddRequest file)
+        private async Task SavePostedFile(HttpPostedFile postedFile)
         {
             MemoryStream ms = null;
             string rootPath = string.Empty;
             string serverPath = string.Empty;
             string fqn = string.Empty;
+            string serverFileName = string.Format("{0}_{1}{2}",
+                    Path.GetFileNameWithoutExtension(postedFile.FileName),
+                    Guid.NewGuid().ToString(),
+                    Path.GetExtension(postedFile.FileName));
 
             serverPath = System.Configuration.ConfigurationManager.AppSettings["fileFolder"];
             rootPath = HttpContext.Current.Server.MapPath(serverPath);
-            fqn = System.IO.Path.Combine(rootPath, file.ServerFileName);
+            fqn = System.IO.Path.Combine(rootPath, serverFileName);
 
-            using (FileStream fs = new FileStream(fqn, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: file.PostedFile.ContentLength, useAsync: true))
+            using (FileStream fs = new FileStream(fqn, FileMode.Append, FileAccess.Write, FileShare.None, bufferSize: postedFile.ContentLength, useAsync: true))
             {
                 ms = new MemoryStream();
-                file.PostedFile.InputStream.CopyTo(ms);
-                await fs.WriteAsync(ms.ToArray(), 0, file.PostedFile.ContentLength);
+                postedFile.InputStream.CopyTo(ms);
+                await fs.WriteAsync(ms.ToArray(), 0, postedFile.ContentLength);
             }
         }
     }

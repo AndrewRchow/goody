@@ -19,9 +19,9 @@
         function _uploadPic(file) {
             file.upload = Upload.upload({
                 url: '/api/file/upload',
-                data: { username: $scope.username, file: file },
+                data: { file: file },
             });
-
+            
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
