@@ -59,16 +59,19 @@
     <Folder Include="Properties" />
     <Folder Include="Tables" />
     <Folder Include="StoredProcs" />
+    <Folder Include="StoredProcs\Peson" />
+    <Folder Include="StoredProcs\UploadedFile" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Tables\Person.sql" />
-    <Build Include="StoredProcs\Person_Insert.sql" />
-    <Build Include="StoredProcs\Person_SelectAll.sql" />
-    <Build Include="StoredProcs\Person_SelectById.sql" />
-    <Build Include="StoredProcs\Person_Update.sql" />
-    <Build Include="StoredProcs\Person_Delete.sql" />
     <Build Include="Tables\UploadedFile.sql" />
-    <Build Include="StoredProcs\UploadedFile_Insert.sql" />
+    <Build Include="StoredProcs\Peson\Person_Delete.sql" />
+    <Build Include="StoredProcs\Peson\Person_Insert.sql" />
+    <Build Include="StoredProcs\Peson\Person_SelectAll.sql" />
+    <Build Include="StoredProcs\Peson\Person_SelectById.sql" />
+    <Build Include="StoredProcs\Peson\Person_Update.sql" />
+    <Build Include="StoredProcs\UploadedFile\UploadedFile_Insert.sql" />
+    <Build Include="StoredProcs\UploadedFile\UploadedFile_SelectAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="InitScript.sql" />

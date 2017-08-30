@@ -5,16 +5,48 @@
         .module("goodyApp")
         .controller("fileController", fileController);
 
-    fileController.$inject = ["$scope", "Upload", "$timeout"];
+    fileController.$inject = ["$scope", "$location", "$timeout", "Upload", "fileService"];
 
-    function fileController($scope, Upload, $timeout){
+    function fileController($scope, $location, $timeout, Upload, fileService){
         var vm = this;
         vm.$scope = $scope;
-        vm.Upload = Upload;
+        vm.$location = $location;
         vm.$timeout = $timeout;
+        vm.Upload = Upload;
+        vm.fileService = fileService;
         vm.item = {};
+        vm.items = [];
 
         vm.uploadPic = _uploadPic;
+
+        vm.uploadNew = _uploadNew;
+        vm.getAllSuccess = _getAllSuccess;
+        vm.getAllError = _getAllError;
+        vm.$onInit = _init;
+
+        function _init() {
+            console.log("FileController: Init");
+            var absUrl = vm.$location.absUrl();
+            if (!vm.$location.absUrl().toLowerCase().includes('/file/upload')) {
+                vm.fileService.getAll()
+                    .then(vm.getAllSuccess)
+                    .catch(vm.getAllError);
+            }
+        }
+
+        function _uploadNew() {
+            window.location = "/file/upload";
+        }
+
+        function _getAllSuccess(data) {
+            console.log("FileController: GetAllSuccess");
+            vm.items = data.items;
+        }
+
+        function _getAllError(err) {
+            console.log("FileController: GetAllError");
+            console.log(err);
+        }
 
         function _uploadPic(file) {
             file.upload = Upload.upload({

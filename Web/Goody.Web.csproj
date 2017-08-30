@@ -212,6 +212,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Domain\Person.cs" />
+    <Compile Include="Models\Domain\UploadedFile.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Requests\FileUploadAddRequest.cs" />
@@ -256,6 +257,7 @@
     <Content Include="Scripts\angularjs\angular.js" />
     <Content Include="Scripts\app\controllers\filecontroller.js" />
     <Content Include="Scripts\app\goodyapp.js" />
+    <Content Include="Scripts\app\services\fileservice.js" />
     <Content Include="Scripts\app\services\personservice.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -330,6 +332,7 @@
     <Content Include="Views\Person\Index.cshtml" />
     <Content Include="Views\Person\Manage.cshtml" />
     <Content Include="Views\File\Index.cshtml" />
+    <Content Include="Views\File\Upload.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

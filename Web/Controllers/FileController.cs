@@ -4,8 +4,12 @@ namespace Goody.Web.Controllers
 {
     public class FileController : Controller
     {
-        // GET: File
         public ActionResult Index()
+        {
+            return View();
+        }
+
+        public ActionResult Upload()
         {
             return View();
         }

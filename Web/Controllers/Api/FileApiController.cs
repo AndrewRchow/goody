@@ -1,4 +1,5 @@
-﻿using Goody.Web.Models.Requests;
+﻿using Goody.Web.Models.Domain;
+using Goody.Web.Models.Requests;
 using Goody.Web.Models.Responses;
 using Goody.Web.Services;
 using System;
@@ -15,6 +16,7 @@ namespace Goody.Web.Controllers.Api
     public class FileApiController : ApiController
     {
         FileService fileService = new FileService();
+        string serverFileName = string.Empty;
 
         [HttpPost]
         [Route("upload")]
@@ -33,10 +35,12 @@ namespace Goody.Web.Controllers.Api
                 };
                 string contentType = Request.Content.Headers.ContentType.MediaType;
 
-                model.ServerFileName = string.Format("{0}_{1}{2}",
+                serverFileName = string.Format("{0}_{1}{2}",
                     Path.GetFileNameWithoutExtension(postedFile.FileName),
                     Guid.NewGuid().ToString(),
                     Path.GetExtension(postedFile.FileName));
+
+                model.ServerFileName = serverFileName;
 
                 await SavePostedFile(postedFile);
                 response.Item = await fileService.Insert(model);
@@ -49,16 +53,28 @@ namespace Goody.Web.Controllers.Api
             }
         }
 
+        [HttpGet]
+        [Route("getall")]
+        public HttpResponseMessage GetAll()
+        {
+            try
+            {
+                ItemsResponse<UploadedFile> response = new ItemsResponse<UploadedFile>();
+                response.Items = fileService.SelectAll();
+                return Request.CreateResponse(HttpStatusCode.OK, response);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
+            }
+        }
+
         private async Task SavePostedFile(HttpPostedFile postedFile)
         {
             MemoryStream ms = null;
             string rootPath = string.Empty;
             string serverPath = string.Empty;
             string fqn = string.Empty;
-            string serverFileName = string.Format("{0}_{1}{2}",
-                    Path.GetFileNameWithoutExtension(postedFile.FileName),
-                    Guid.NewGuid().ToString(),
-                    Path.GetExtension(postedFile.FileName));
 
             serverPath = System.Configuration.ConfigurationManager.AppSettings["fileFolder"];
             rootPath = HttpContext.Current.Server.MapPath(serverPath);

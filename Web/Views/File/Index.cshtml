@@ -3,35 +3,34 @@
     ViewBag.Title = "Index";
 }
 
-<h2>File Upload</h2>
+<h2>File List</h2>
 
-<div ng-controller="fileController as fileCtrl">
-    <form name="myForm">
-        <fieldset>
-            <legend>Upload on form submit</legend>
-            <br>Photo:
-            <input type="file" ngf-select ng-model="picFile" name="file"
-                   accept="image/*" ngf-max-size="2MB" required
-                   ngf-model-invalid="errorFile">
-            <i ng-show="myForm.file.$error.required">*required</i><br>
-            <i ng-show="myForm.file.$error.maxSize">
-                File too large
-                {{fileCtrl.item.errorFile.size / 1000000|number:1}}MB: max 2M
-            </i>
-            <img ng-show="myForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
-            <button ng-click="picFile = null" ng-show="picFile">Remove</button>
-            <br />
-            <button ng-disabled="!myForm.$valid" ng-click="fileCtrl.uploadPic(picFile)">Submit</button>
-            <span class="progress" ng-show="picFile.progress >= 0">
-                <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
-            </span>
-            <span ng-show="picFile.result">Upload Successful</span>
-            <span class="err" ng-show="fileCtrl.item.errorMsg">{{fileCtrl.item.errorMsg}}</span>
-        </fieldset>
-        <br />
-    </form>
-    {{fileCtrl}}
+<div ng-controller="fileController as fileCtrl" ng-cloak>
+    <button class="btn-link" type="button" ng-click="fileCtrl.uploadNew()">Upload</button>
+    <table class="table table-bordered table-hover table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Type</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in fileCtrl.items">
+                <td>{{item.fileName}}</td>
+                <td>{{item.size}}</td>
+                <td>{{item.type}}</td>
+                <td><img ng-src="{{item.systemFileName}}" alt="{{item.fileName}}" height="32" /></td>
+                <td>
+                    <button class="btn-link" type="button" ng-click="fileCtrl.delete(item)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>
 @section scripts{
+    <script src="~/Scripts/app/services/fileservice.js"></script>
     <script src="~/Scripts/app/controllers/filecontroller.js"></script>
 }

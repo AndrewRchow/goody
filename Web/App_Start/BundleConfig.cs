@@ -113,6 +113,11 @@ namespace Goody.Web
                 "~/Scripts/app/controllers/personcontroller.js",
                 "~/Scripts/app/services/personservice.js"));
 
+            // File Controller JS
+            bundles.Add(new ScriptBundle("~/bundles/filectrl").Include(
+                "~/Scripts/app/controllers/filecontroller.js",
+                "~/Scripts/app/services/fileservice.js"));
+
             // Angular JS CSS
             bundles.Add(new StyleBundle("~/Content/angularjs-css",
                 "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-csp.css")

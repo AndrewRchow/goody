@@ -79,7 +79,7 @@
 
             function _getAllError(err) {
                 console.log("PersonService: getAllError");
-                $q.reject(err);
+                return $q.reject(err);
             }
         }
     }
