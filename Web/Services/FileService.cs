@@ -59,21 +59,40 @@ namespace Goody.Web.Services
             return id;
         }
 
+        public UploadedFile Delete(int id)
+        {
+            UploadedFile uploadedFile = new UploadedFile();
+            using (SqlConnection conn = new SqlConnection(connString))
+            {
+                conn.Open();
+                using (SqlCommand cmd = new SqlCommand("UploadedFile_Delete", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@Id", id);
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                        uploadedFile = Mappper(reader);
+                }
+                conn.Close();
+            }
+            return uploadedFile;
+        }
+
         private UploadedFile Mappper(SqlDataReader reader)
         {
             int index = 0;
-            string baseUrl = ConfigurationManager.AppSettings["fileFolder"];
             UploadedFile file = new UploadedFile();
             file.Id = reader.GetInt32(index++);
             file.FileName = reader.GetString(index++);
             file.Size = reader.GetInt32(index++);
             file.Type = reader.GetString(index++);
-            file.SystemFileName = baseUrl.Replace("~","") + "/" + reader.GetString(index++);
+            file.SystemFileName = reader.GetString(index++);
             file.CreatedDate = reader.GetDateTime(index++);
             file.ModifiedDate = reader.GetDateTime(index++);
             file.Modifiedby = reader.GetString(index++);
 
             return file;
         }
+
     }
 }

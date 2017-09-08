@@ -22,6 +22,9 @@
         vm.uploadNew = _uploadNew;
         vm.getAllSuccess = _getAllSuccess;
         vm.getAllError = _getAllError;
+        vm.delete = _delete;
+        vm.deleteSuccess = _deleteSuccess;
+        vm.deleteError = _deleteError;
         vm.$onInit = _init;
 
         function _init() {
@@ -36,6 +39,26 @@
 
         function _uploadNew() {
             window.location = "/file/upload";
+        }
+
+        function _delete(fileItem) {
+            vm.item = fileItem;
+            vm.fileService.delete(fileItem.id)
+                .then(vm.deleteSuccess)
+                .catch(vm.deleteError);
+        }
+
+        function _deleteSuccess(data) {
+            console.log("FileController: DeleteSuccess");
+            console.log("FileController: Removing the following item: ");
+            console.log(data.item);
+            var idx = vm.items.indexOf(vm.item);
+            vm.items.splice(idx, 1);
+        }
+
+        function _deleteError(err) {
+            console.log("FileController: DeleteError");
+            console.log(err);
         }
 
         function _getAllSuccess(data) {
@@ -57,6 +80,7 @@
             file.upload.then(function (response) {
                 $timeout(function () {
                     file.result = response.data;
+                    window.location = '/file';
                 });
             }, function (response) {
                 if (response.status > 0)

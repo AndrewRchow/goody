@@ -6,6 +6,7 @@ using System;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -61,12 +62,33 @@ namespace Goody.Web.Controllers.Api
             {
                 ItemsResponse<UploadedFile> response = new ItemsResponse<UploadedFile>();
                 response.Items = fileService.SelectAll();
+                ResolveImageUrl(response);
                 return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ex);
             }
+        }
+
+        private void ResolveImageUrl(ItemsResponse<UploadedFile> response)
+        {
+            string serverPath = System.Configuration.ConfigurationManager.AppSettings["fileFolder"];
+            foreach (UploadedFile file in response.Items)
+            {
+                string filePath = Path.Combine(serverPath, file.SystemFileName);
+                file.SystemFileName = VirtualPathUtility.ToAbsolute(filePath);
+            }
+        }
+
+        [HttpDelete]
+        [Route("delete/{id:int}")]
+        public HttpResponseMessage Delete(int id)
+        {
+            ItemResponse<UploadedFile> response = new ItemResponse<UploadedFile>();
+            response.Item = fileService.Delete(id);
+            DeleteFile(response.Item);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
         }
 
         private async Task SavePostedFile(HttpPostedFile postedFile)
@@ -86,6 +108,14 @@ namespace Goody.Web.Controllers.Api
                 postedFile.InputStream.CopyTo(ms);
                 await fs.WriteAsync(ms.ToArray(), 0, postedFile.ContentLength);
             }
+        }
+
+        private void DeleteFile(UploadedFile uploadedFile)
+        {
+            string serverPath = System.Configuration.ConfigurationManager.AppSettings["fileFolder"];
+            string rootPath = HttpContext.Current.Server.MapPath(serverPath);
+            string fqn = System.IO.Path.Combine(rootPath, Path.GetFileName(uploadedFile.SystemFileName));
+            File.Delete(fqn);
         }
     }
 }

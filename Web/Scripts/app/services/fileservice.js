@@ -8,7 +8,8 @@
 
     function FileService($http, $q) {
         return {
-            getAll: _getAll
+            getAll: _getAll,
+            delete: _delete
         };
 
         function _getAll() {
@@ -24,6 +25,22 @@
 
             function _getAllError(err) {
                 console.log("FileService: GetAllError");
+                return $q.reject(err);
+            }
+        }
+
+        function _delete(id) {
+            return $http.delete("/api/file/delete/" + id)
+                .then(_deleteSuccess)
+                .catch(_deleteError);
+
+            function _deleteSuccess(response) {
+                console.log("FileService: DeleteSuccess");
+                return response.data;
+            }
+
+            function _deleteError(err) {
+                console.log("FileServer: DeleteError");
                 return $q.reject(err);
             }
         }

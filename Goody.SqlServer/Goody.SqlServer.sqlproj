@@ -72,6 +72,7 @@
     <Build Include="StoredProcs\Peson\Person_Update.sql" />
     <Build Include="StoredProcs\UploadedFile\UploadedFile_Insert.sql" />
     <Build Include="StoredProcs\UploadedFile\UploadedFile_SelectAll.sql" />
+    <Build Include="StoredProcs\UploadedFile\UploadedFile_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="InitScript.sql" />
