@@ -22,7 +22,7 @@
                 <td>{{item.fileName}}</td>
                 <td>{{item.size}}</td>
                 <td>{{item.type}}</td>
-                <td><img ng-src="{{item.systemFileName}}" alt="{{item.fileName}}" height="32" /></td>
+                <td><img ng-src="{{item.systemFileName}}" alt="{{item.fileName}}" ng-click="fileCtrl.showImage($event)" height="32" /></td>
                 <td>
                     <button class="btn-link" type="button" ng-click="fileCtrl.delete(item)">Delete</button>
                 </td>

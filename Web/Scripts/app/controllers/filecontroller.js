@@ -5,20 +5,24 @@
         .module("goodyApp")
         .controller("fileController", fileController);
 
-    fileController.$inject = ["$scope", "$location", "$timeout", "Upload", "fileService"];
+    fileController.$inject = ["$scope", "$mdDialog", "$location", "$timeout", "Upload", "fileService"];
 
-    function fileController($scope, $location, $timeout, Upload, fileService){
+    function fileController($scope, $mdDialog, $location, $timeout, Upload, fileService){
         var vm = this;
         vm.$scope = $scope;
+        vm.$mdDialog = $mdDialog;
         vm.$location = $location;
         vm.$timeout = $timeout;
         vm.Upload = Upload;
         vm.fileService = fileService;
         vm.item = {};
         vm.items = [];
+        vm.$event = null;
+        vm.status = "Hello";
 
         vm.uploadPic = _uploadPic;
 
+        vm.showImage = _showImage;
         vm.uploadNew = _uploadNew;
         vm.getAllSuccess = _getAllSuccess;
         vm.getAllError = _getAllError;
@@ -88,6 +92,28 @@
             }, function (evt) {
                 // Math.min is to fix IE which reports 200% sometimes
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            });
+        }
+
+        function _showImage(ev) {
+            console.log("FileController: ShowImage");
+            vm.status = "Goodbye";
+            vm.$event = ev;
+            $mdDialog.show({
+                controller: ['$scope', 'data', function ($scope, data) {
+                    $scope.data = data;
+                }],
+                templateUrl: '/assets/diaglog1.tmpl.html',
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true,
+                fullscreen: vm.$scope.customFullscreen,
+                locals: { data: ev.currentTarget.currentSrc }
+            })
+            .then(function (answer) {
+                vm.status = 'You said the information was "' + answer + '".';
+            }, function () {
+                vm.status = 'You cancelled the dialog.';
             });
         }
     }

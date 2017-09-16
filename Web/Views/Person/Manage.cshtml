@@ -9,10 +9,13 @@
     <md-content layout-padding>
         <form name="personForm">
             <div layout-gt-xs="row" ng-show="personCtrl.item.id > 0">
-                <md-input-container class="md-block">
+                <md-input-container class="md-block" flex="auto">
                     <label>ID (read only)</label>
                     <input ng-model="personCtrl.item.id" disabled />
                 </md-input-container>
+                <md-card class="md-block" layout-align="right right" flex="20">
+                    <img class="md-avatar-icon" src="https://www.whitehouse.gov/sites/whitehouse.gov/files/images/first-family/01_george_washington%5B1%5D.jpg" />
+                </md-card>
             </div>
             <div layout-gt-xs="row">
                 <md-input-container class="md-block">

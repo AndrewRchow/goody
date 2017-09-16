@@ -73,9 +73,13 @@
     <Build Include="StoredProcs\UploadedFile\UploadedFile_Insert.sql" />
     <Build Include="StoredProcs\UploadedFile\UploadedFile_SelectAll.sql" />
     <Build Include="StoredProcs\UploadedFile\UploadedFile_Delete.sql" />
+    <Build Include="Tables\PersonPicture.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="InitScript.sql" />
     <None Include="Person_AddPresidents.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="Goody.SqlServer.refactorlog" />
   </ItemGroup>
 </Project>
